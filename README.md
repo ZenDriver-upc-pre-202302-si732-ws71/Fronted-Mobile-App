@@ -20,7 +20,7 @@ ZenDriver es una aplicación móvil en la que los choferes profesionales pueden 
 
 ### Abel Cierto 
 
-<img src="https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q" alt="Abel Cierto" width="100">
+<img src="https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q" alt="Abel Cierto" width="150">
 
 ### Yeni Alvarado
 [![Ludwin Reyes](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/LudwinReyes.png)](https://www.linkedin.com/in/ludwin-reyes-suarez-51124a1bb)
