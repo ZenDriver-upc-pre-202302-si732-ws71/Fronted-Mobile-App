@@ -25,7 +25,8 @@ class _MainAppState extends State<MainApp> {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const SigninScreen()
+      home: const SigninScreen(),
+      debugShowCheckedModeBanner: false,
     );
     
   }
