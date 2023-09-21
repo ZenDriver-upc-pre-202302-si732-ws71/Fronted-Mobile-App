@@ -3,10 +3,14 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:zendriver/models/driver_profile.dart';
+import 'package:zendriver/ui/shared/services/base_service.dart';
 
-class DriverProfileService {
-  final String driverProfilebaseUrl =
-      'https://zendriver.azurewebsites.net/api/v1/driverprofile';
+class DriverProfileService extends BaseService {
+  late final String driverProfilebaseUrl;
+
+  DriverProfileService() {
+    driverProfilebaseUrl = produceUri("driverprofile");
+  }
 
   Future<List<DriverProfile>> getProfiles(licenseType) async {
     final response = await http.get(Uri.parse(driverProfilebaseUrl));

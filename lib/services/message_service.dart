@@ -2,11 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:zendriver/ui/shared/services/base_service.dart';
 import '../models/message.dart';
 
-class MessageService {
-  final String _baseUrl = 'https://zendriver.azurewebsites.net/api/v1/message';
+class MessageService extends BaseService {
+  late final String _baseUrl;
   //final String _baseUrl = 'https://localhost:4500/api/v1/message';
+
+  MessageService() {
+    _baseUrl = produceUri("message");
+  }
 
   Future<List<Message>> getMessages() async {
     final response = await http.get(Uri.parse(_baseUrl));

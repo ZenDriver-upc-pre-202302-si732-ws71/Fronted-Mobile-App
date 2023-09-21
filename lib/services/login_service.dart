@@ -2,18 +2,22 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zendriver/ui/shared/services/base_service.dart';
 
 import '../models/user.dart';
 
-class LoginService {
-  final String baseUrl = 'https://zendriver.azurewebsites.net/api/v1/users/';
+class LoginService extends BaseService {
+  late final String baseUrl;
   //final String baseUrl = 'http://192.168.1.16/api/v1/users/';
-
+  
+  LoginService() {
+    baseUrl = produceUri("users");
+  }
 
   Future<LoginResponse> login(String name, String password) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final url = '${baseUrl}sign-in';
+    final url = '$baseUrl/sign-in';
     final response = await http.post(Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -34,7 +38,7 @@ class LoginService {
   }
 
   Future<SignupResponse> signUp(User user) async {
-    final url = '${baseUrl}sign-up';
+    final url = '$baseUrl/sign-up';
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},

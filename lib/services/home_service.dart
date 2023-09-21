@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:zendriver/ui/shared/services/base_service.dart';
 
-class HomeService {
-  final String homebaseUrl =
-      'https://zendriver.azurewebsites.net/api/v1/socialnetwork';
+class HomeService extends BaseService {
+  late final String homebaseUrl;
+
+  HomeService() {
+    homebaseUrl = produceUri("socialnetwork");
+  }
 
   Future<List<dynamic>> getPosts() async {
     final response = await http.get(Uri.parse(homebaseUrl));
