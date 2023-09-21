@@ -18,19 +18,19 @@ ZenDriver es una aplicación móvil en la que los choferes profesionales pueden 
 
 ## Autors
 
-### Dominik Mendoza
-[![Abel Cierto](https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q)](https://www.linkedin.com/in/abel-angel-cierto-espiritu-b0140820b/?originalSubdomain=pe)
+### Abel Cierto
+[![Abel Cierto](https://ibb.co/dLHsdTT)](https://www.linkedin.com/in/abel-angel-cierto-espiritu-b0140820b/?originalSubdomain=pe)
 
-### Ludwin Reyes
+### Yeni Alvarado
 [![Ludwin Reyes](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/LudwinReyes.png)](https://www.linkedin.com/in/ludwin-reyes-suarez-51124a1bb)
 
 ### Frank Alva
 [![Frank Alva](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/FrankAlva.png)](https://www.linkedin.com/in/dominik-mendoza-ramos-91496a224/)
 
-### Nicole Price
+### Yoimer Dávila
 [![Nicole Price](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/NicolePrice.png)](https://www.linkedin.com/in/dominik-mendoza-ramos-91496a224/)
 
-### Ryan Sweden
+### Max Dayson
 [![Ryan Sweden](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/RyanSweden.png)](https://www.linkedin.com/in/dominik-mendoza-ramos-91496a224/)
 
 ---
