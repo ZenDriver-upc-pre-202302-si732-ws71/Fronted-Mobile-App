@@ -19,8 +19,8 @@ ZenDriver es una aplicación móvil en la que los choferes profesionales pueden 
 ## Autors
 
 ### Abel Cierto
-[![Abel Cierto](https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q)](https://www.linkedin.com/in/abel-angel-cierto-espiritu-b0140820b/?originalSubdomain=pe)
-<img src="https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q" alt="Abel Cierto" width="400">
+[![Abel Cierto]()](https://www.linkedin.com/in/abel-angel-cierto-espiritu-b0140820b/?originalSubdomain=pe)
+<img src="https://media.licdn.com/dms/image/C4D03AQEzpOmEgJkn5g/profile-displayphoto-shrink_800_800/0/1620273746171?e=1700697600&v=beta&t=x2U0j8aHQrFpY1ejq1D0u3ChHsBTPvp3KY8K1ENba1Q" alt="Abel Cierto" width="200">
 
 ### Yeni Alvarado
 [![Ludwin Reyes](https://github.com/Innova-mind/Innova-mind.github.io/blob/main/assets/images/contributors/LudwinReyes.png)](https://www.linkedin.com/in/ludwin-reyes-suarez-51124a1bb)
