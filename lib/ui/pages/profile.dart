@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zendriver/models/profiles.dart';
+import 'package:zendriver/models/user_sign_up.dart';
 import 'package:zendriver/services/profile_service.dart';
+import '../../models/user_profile.dart';
+import '../../services/user_profile_service.dart';
 import 'login.dart';
 
 class Profile extends StatefulWidget {
@@ -11,8 +14,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  userProfile? user;
-  ProfileService? profileService;
+  UserProfile? user;
+  UserProfileService? profileService;
   Future<SharedPreferences>? _prefs;
   String? tuken;
   String? id;
@@ -33,22 +36,25 @@ class _ProfileState extends State<Profile> {
     user = await profileService?.getData(userId!);
     setState(() {
       user = user;
-      firstNameController.text = user?.firstName ?? '';
-      lastNameController.text = user?.lastName ?? '';
-      usernameController.text = user?.userName ?? '';
-      passwordController.text = user?.password ?? '';
+      firstNameController.text = user?.firstname ?? '';
+      lastNameController.text = user?.lastname ?? '';
+      usernameController.text = user?.username ?? '';
+      //passwordController.text = user?.password ?? '';
+      passwordController.text = 'Contact Admin to change';
       phoneController.text = user?.phone ?? '';
       roleController.text = user?.role ?? '';
-      descriptionController.text = user?.description ?? '';
-      imageUrlController.text = user?.imageUrl ?? '';
-      birthdayDateController.text = user?.birthdayDate ?? '';
+      descriptionController.text = 'You are a user of ZenDriver';
+      //imageUrlController.text = user?.imageUrl ?? '';
+      imageUrlController.text = 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg';
+      //birthdayDateController.text = user?.birthdayDate ?? '';
+      birthdayDateController.text = '12-9-1995';
     });
   }
 
   @override
   void initState() {
     _prefs = SharedPreferences.getInstance();
-    profileService = ProfileService();
+    profileService = UserProfileService();
     initialize();
     _getToken();
     super.initState();
@@ -79,17 +85,17 @@ class _ProfileState extends State<Profile> {
   }
 
   void updateUserProfile() async {
-    final updatedUser = userProfile(
-      id: user!.id,
-      firstName: user!.firstName,
-      lastName: user!.lastName,
-      userName: usernameController.text,
-      password: passwordController.text,
+
+    final updatedUser = UserProfile(
+      firstname: user!.firstname,
+      lastname: user!.lastname,
+      username: usernameController.text,
+      //password: passwordController.text,
       phone: phoneController.text,
-      role: roleController.text,
-      description: descriptionController.text,
-      imageUrl: imageUrlController.text,
-      birthdayDate: birthdayDateController.text,
+      //role: roleController.text,
+      //description: descriptionController.text,
+      //imageUrl: imageUrlController.text,
+      //birthdayDate: birthdayDateController.text,
     );
 
     try {
@@ -104,7 +110,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final String? image = user?.imageUrl;
+    //final String? image = user?.imageUrl;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -117,17 +123,13 @@ class _ProfileState extends State<Profile> {
                 alignment: Alignment.center,
                 child: CircleAvatar(
                   radius: 50.0,
-                  backgroundImage: NetworkImage(
-                    user == null
-                        ? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'
-                        : user!.imageUrl,
-                  ),
+                  backgroundImage: NetworkImage('https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'),
                 ),
               ),
               const SizedBox(height: 16.0),
               Center(
                 child: Text(
-                  '${user?.firstName} ${user?.lastName}',
+                  '${user?.firstname} ${user?.lastname}',
                   style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -135,19 +137,19 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(height: 8.0),
-              Center(
+              /* Center(
                 child: Text(
                   '${user?.description}',
                   style: const TextStyle(fontSize: 16.0),
                 ),
-              ),
+              ), */
               const SizedBox(height: 16.0),
               buildTextField('Username', usernameController),
               buildTextField('Password', passwordController),
               buildTextField('Description', descriptionController),
               buildTextField('Phone', phoneController),
               buildTextField('Role', roleController),
-              buildTextField('BrithdayDate', birthdayDateController),
+              //buildTextField('BrithdayDate', birthdayDateController),
               const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

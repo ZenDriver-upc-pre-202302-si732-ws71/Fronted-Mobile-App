@@ -63,7 +63,7 @@ class _SearchYourDriverState extends State<SearchYourDriver> {
                 height: 30,
               ),
               Center(
-                child: Text(user?.role == "recruiter" ?"¿Cúal es su chofer ideal?" : "Conoce a otros choferes!",
+                child: Text(user?.role == "Recruiter" ?"¿Cúal es su chofer ideal?" : "Conoce a otros choferes!",
                   style: const TextStyle(fontSize: 30),
                 ),
               ),
