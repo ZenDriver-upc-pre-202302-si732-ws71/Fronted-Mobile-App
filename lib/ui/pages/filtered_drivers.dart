@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:zendriver/models/driver_profile.dart';
-import 'package:zendriver/services/driver_profile_service.dart';
+import 'package:zendriver/entities/driver.dart';
+import 'package:zendriver/entities/find_driver.dart';
+import 'package:zendriver/networking/services/driver_service.dart';
 import 'package:zendriver/ui/pages/filtered_driver_item.dart';
 
 class FilteredDrivers extends StatefulWidget {
-  const FilteredDrivers({Key? key, required this.licenseType, required this.operation, required this.title}) : super(key: key);
-  final String licenseType;
-  final int operation;
+  const FilteredDrivers({Key? key, this.licenseType, required this.title}) : super(key: key);
+  final String? licenseType;
   final String title;
 
   @override
@@ -14,19 +14,19 @@ class FilteredDrivers extends StatefulWidget {
 }
 
 class _FilteredDriversState extends State<FilteredDrivers> {
-  List<DriverProfile>? profiles;
-  DriverProfileService httpHelper = DriverProfileService();
+  List<Driver>? drivers = List.empty();
+  final DriverService _driverService = DriverService();
 
   Future initialize() async {
-    profiles = List.empty();
-    if(widget.operation == 0){
-     profiles = await httpHelper.getProfiles(widget.licenseType);
+    List<Driver> result = List.empty();
+    if(widget.licenseType == null) {
+      result = await _driverService.getAll();
     }
-    else if (widget.operation == 1){
-      profiles = await httpHelper.getAllProfiles();
+    else {
+      result = await _driverService.getByLicenseType(FindDriver(yearsOfExperience: 0, categoryName: widget.licenseType));
     }
     setState(() {
-      profiles = profiles;
+      drivers = result;
     });
   }
 
@@ -45,9 +45,9 @@ class _FilteredDriversState extends State<FilteredDrivers> {
       body: CustomScrollView(
         slivers: [
           SliverList.builder(
-            itemCount: profiles?.length,
+            itemCount: drivers?.length,
             itemBuilder: (context, index) {
-              return DriverItem(driverProfile: profiles![index]);
+              return DriverItem(driver: drivers![index]);
             },
           )
         ],

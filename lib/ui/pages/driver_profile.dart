@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../models/driver_profile.dart';
+import 'package:zendriver/entities/driver.dart';
 import 'messages.dart';
 
 class DriverProfileScreen extends StatefulWidget {
-  const DriverProfileScreen({super.key, required this.driverProfile});
-  final DriverProfile driverProfile;
+  const DriverProfileScreen({super.key, required this.driver});
+  final Driver driver;
   @override
   State<DriverProfileScreen> createState() => _DriverProfileScreenState();
 }
@@ -19,7 +18,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
     userId = prefs.getInt('userId')!;
     final currentYear = DateTime.now().year;
     final experienceYear =
-        num.tryParse(widget.driverProfile.driver.experienceYears ?? '0');
+        num.tryParse('0');
     setState(() {
       experienceYears = currentYear - experienceYear!;
     });
@@ -55,7 +54,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                   ),
                 ),
                 Text(
-                    "Perfil de ${widget.driverProfile.driver.user!.firstName} ${widget.driverProfile.driver.user!.lastName}",
+                    "Perfil de ${widget.driver.account!.firstname} ${widget.driver.account!.lastname}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -86,9 +85,8 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
-                        child: Image(
-                          image: NetworkImage(
-                              widget.driverProfile.driver.user!.imageUrl),
+                        child: const Image(
+                          image: NetworkImage("https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"),
                           width: 150,
                           height: 200,
                         ),
@@ -112,7 +110,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                               ),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  widget.driverProfile.driver.user!.firstName,
+                                  widget.driver.account!.firstname!,
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 14))),
                           const SizedBox(height: 16),
@@ -125,7 +123,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                               ),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  widget.driverProfile.driver.user!.lastName)),
+                                  widget.driver.account!.lastname!)),
                           const SizedBox(height: 16),
                           Container(
                               padding: const EdgeInsets.all(16.0),
@@ -135,8 +133,8 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                                 color: Colors.white,
                               ),
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                  "Rol: ${widget.driverProfile.driver.user!.role}")),
+                              child: const Text(
+                                  "Rol: Driver")),
                           const SizedBox(height: 16),
                         ],
                       )
@@ -171,9 +169,9 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                         Container(
                           padding: const EdgeInsets.all(16.0),
                           alignment: Alignment.center,
-                          child: Text(
-                            "Tipo de licencia: ${widget.driverProfile.license.category}",
-                            style: const TextStyle(
+                          child: const Text(
+                            "Tipo de licencia: ",
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                             ),
@@ -203,14 +201,14 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Messages(
-                        emitterId: widget.driverProfile.driver.user!.id,
+                        emitterId: widget.driver.account!.id!,
                         receiverId: userId,
                       ),
                     )
                   );
                 },
                 child: Text(
-                    "Enviar mensaje a ${widget.driverProfile.driver.user!.firstName} ${widget.driverProfile.driver.user!.lastName}")),
+                    "Enviar mensaje a ${widget.driver.account!.firstname} ${widget.driver.account!.lastname}")),
           ],
         ),
       ),

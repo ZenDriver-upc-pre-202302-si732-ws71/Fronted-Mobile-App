@@ -1,7 +1,10 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
+import 'package:zendriver/services/user_sign_up_service.dart';
 import '../../models/user.dart';
+import '../../models/user_sign_up.dart';
 import '../../services/login_service.dart';
+import 'login.dart';
 
 String _twoDigits(int n) {
   if (n >= 10) {
@@ -18,21 +21,20 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  LoginService httpHelper = LoginService();
+  UserSignUpService httpHelper = UserSignUpService();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _roleController = TextEditingController();
-  final TextEditingController _passwordConfirmController =
-      TextEditingController();
+  final TextEditingController _passwordConfirmController = TextEditingController();
   DateTime _dateTime = DateTime.now();
 
   bool _isButtonEnabled = false;
   bool _isPasswordVisible = false;
   bool _isPasswordConfirmVisible = false;
-  String _role = 'recruiter';
+  String _role = 'driver';
 
 
   void _showDatePicker() async {
@@ -46,6 +48,13 @@ class _SignupScreenState extends State<SignupScreen> {
         _dateTime = value!;
       });
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //_role = 'driver';
+    _roleController.text = _role;
   }
 
   @override
@@ -63,6 +72,12 @@ class _SignupScreenState extends State<SignupScreen> {
       _isButtonEnabled = _formKey.currentState?.validate() ?? false;
     });
   }
+   void navigateToSignIn() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SigninScreen()),
+    );
+  }
 
   void returnToSignIn(SignupResponse response) {
     showDialog(
@@ -75,7 +90,6 @@ class _SignupScreenState extends State<SignupScreen> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pop(context);
               },
               child: const Text('OK'),
             ),
@@ -85,22 +99,32 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void signUp() async {
+  void signUp() async { 
     try {
-      User user = User(
-          id: 0,
-          firstName: _firstNameController.text,
-          lastName: _lastNameController.text,
+      UserSignUp user = UserSignUp(
+          firstname: _firstNameController.text,
+          lastname: _lastNameController.text,
           username: _usernameController.text,
           password: _passwordController.text,
           phone: '-',
           role: _roleController.text,
-          description: '-',
-          imageUrl:
-              'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
-          birthdayDate: _dateTime.toString());
+          recruiter: _roleController.text == "recruiter" ?  Recruiter(
+            email: '-',
+            description: '-',
+            companyId: 1
+            ) : null,
+          driver: _roleController.text == "driver" ?  Driver(
+            address: 'Lima',
+            birth: '1990-09-23T19:28:53.298Z'
+            ) : null
+        );
+      print('---------------------user register-------------');
+      print(user.toJson());
       SignupResponse? response = await httpHelper.signUp(user);
+      print('---------------------user response-------------');
+      print(response);
       returnToSignIn(response);
+      navigateToSignIn();
     } catch (e) {
       String message = e.toString().split(':')[1].trim();
       showDialog(
@@ -177,7 +201,7 @@ class _SignupScreenState extends State<SignupScreen> {
               },
             ),
             const SizedBox(height: 20),
-            ElevatedButton.icon(
+            /* ElevatedButton.icon(
               icon: const Icon(
                 Icons.calendar_today,
                 color: Colors.green,
@@ -192,8 +216,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 _showDatePicker();
               },
               label: const Text("Seleccionar Fecha de nacimiento"),
-            ),
-            const SizedBox(height: 20),
+            ), */
             TextFormField(
               controller: _usernameController,
               decoration: const InputDecoration(
@@ -296,12 +319,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 onChanged: (value) {
                   setState(() {
                     _role = value;
-                    if(_role == 'recruiter'){
+                    /* if(_role == 'recruiter'){
                       _roleController.text = 'driver';
                     }
                     else{
                       _roleController.text = 'recruiter';
-                    }
+                    } */
+                    _roleController.text = value;
                     print(_roleController.text);
                   });
                   
@@ -310,11 +334,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 },
                 colorBuilder: (value) => _role == "recruiter" ? Colors.blue : Colors.green,
                 iconBuilder: (value) => value == "recruiter"
-                    ? const Icon(Icons.drive_eta_rounded)
-                    : const Icon(Icons.person),
+                    ? const Icon(Icons.person)
+                    : const Icon(Icons.drive_eta_rounded),
                 textBuilder: (value) => value == "recruiter"
-                    ? const Center(child: Text('Driver'))
-                    : const Center(child: Text('Recruiter')),
+                    ? const Center(child: Text('Recuiter'))
+                    : const Center(child: Text('Driver')),
               ),
             
             const SizedBox(height: 20),

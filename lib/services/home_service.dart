@@ -7,11 +7,11 @@ class HomeService extends BaseService {
   late final String homebaseUrl;
 
   HomeService() {
-    homebaseUrl = produceUri("socialnetwork");
+    homebaseUrl = produceUri("posts");
   }
 
   Future<List<dynamic>> getPosts() async {
-    final response = await http.get(Uri.parse(homebaseUrl));
+    final response = await get(homebaseUrl);
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
