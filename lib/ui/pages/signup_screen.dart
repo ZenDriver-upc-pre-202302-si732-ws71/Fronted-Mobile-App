@@ -120,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
         );
       print('---------------------user register-------------');
       print(user.toJson());
-      SignupResponse? response = await httpHelper.signUp(user);
+      SignupResponse response = await httpHelper.signUp(user);
       print('---------------------user response-------------');
       print(response);
       returnToSignIn(response);

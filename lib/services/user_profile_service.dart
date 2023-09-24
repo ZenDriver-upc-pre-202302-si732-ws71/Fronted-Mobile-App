@@ -26,27 +26,32 @@ class UserProfileService extends BaseService {
     }
   }
   
-  Future<UserUpdate> updateData(int ? id, UserUpdate updatedProfile) async {
-  print(id);
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final response = await http.put(
-    Uri.parse('$baseUrl/${id}'),
+  Future<Map<String, dynamic>> updateData(int ? id, UserUpdate updatedProfile) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+         final response = await http.put(
+    Uri.parse('$baseUrl/${id!}'),
     headers: {
       HttpHeaders.authorizationHeader: prefs.getString('token') ?? '',
       HttpHeaders.contentTypeHeader: 'application/json',
     },
     body: jsonEncode(updatedProfile.toJson()),
-    
+
   );
 
   if (response.statusCode == HttpStatus.ok) {
-    return UserUpdate.fromJson(json.decode(response.body));
+    final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
+    return jsonData;
     // Actualización exitosa
     // Puedes mostrar una notificación o realizar cualquier otra acción deseada
   } else {
     // Error al actualizar el perfil
     throw Exception('Failed to update profile');
   }
+    }
+     catch (e) {
+      throw Exception('Failed to update profile. Error: $e');
+    }
 }
 
 }

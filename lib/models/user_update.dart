@@ -14,11 +14,11 @@ class UserUpdate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstname'] = this.firstname;
-    data['lastname'] = this.lastname;
-    data['username'] = this.username;
-    data['phone'] = this.phone;
-    return data;
+    return {
+      'firstname': firstname,
+      'lastname': lastname,
+      'username': username,
+      'phone': phone,
+    };
   }
 }

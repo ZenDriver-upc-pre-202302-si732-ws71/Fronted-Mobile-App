@@ -87,14 +87,16 @@ class _ProfileState extends State<Profile> {
   void updateUserProfile() async {
 
     final updatedUser = UserUpdate(
-      firstname: user!.firstname,
-      lastname: user!.lastname,
+      firstname: firstNameController.text,
+      lastname: lastNameController.text,
       username: usernameController.text,
       phone: phoneController.text,
     );
 
     try {
+
       final responseUpdate = await profileService?.updateData(userId!, updatedUser);
+
       print(userId!);
       print('----------------User response update----------------');
       print(responseUpdate);
@@ -104,6 +106,7 @@ class _ProfileState extends State<Profile> {
       setState(() {
         user = response;
         print(user);
+
       });
     } catch (e) {
       print(e);
