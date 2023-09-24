@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zendriver/models/driver_profile.dart';
+import 'package:zendriver/entities/driver.dart';
 import 'package:zendriver/ui/pages/driver_profile.dart';
 
 
 class DriverItem extends StatefulWidget {
-  const DriverItem({super.key, required this.driverProfile});
-  final DriverProfile driverProfile;
+  const DriverItem({super.key, required this.driver});
+  final Driver driver;
 
   @override
   State<DriverItem> createState() => _DriverItemState();
@@ -30,9 +30,9 @@ class _DriverItemState extends State<DriverItem> {
               
               height: 200,
               width: 200,
-              child: Image(
+              child: const Image(
                   //image: NetworkImage('https://www.drakonball.com/wp-content/uploads/2023/02/los-mejores-memes-de-dragon-ball.jpg'),
-                  image: NetworkImage(widget.driverProfile.driver.user!.imageUrl),
+                  image: NetworkImage("https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"),
                   width: 50,
                   height: 50),
             ),
@@ -51,7 +51,7 @@ class _DriverItemState extends State<DriverItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text("${widget.driverProfile.driver.user!.firstName} ${widget.driverProfile.driver.user!.lastName}")),
+                    child: Text("${widget.driver.account?.firstname} ${widget.driver.account?.lastname}")),
                   
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -61,7 +61,7 @@ class _DriverItemState extends State<DriverItem> {
                       onPressed: () {
                         Navigator.push(context,
                         
-                        MaterialPageRoute(builder: (context) =>  DriverProfileScreen(driverProfile: widget.driverProfile)));
+                        MaterialPageRoute(builder: (context) =>  DriverProfileScreen(driver: widget.driver)));
                       },
                       child: const Text(
                         'Ver Perfil',

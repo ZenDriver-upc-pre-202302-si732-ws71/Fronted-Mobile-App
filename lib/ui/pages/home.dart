@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zendriver/models/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zendriver/services/home_service.dart';
+import 'package:zendriver/entities/post.dart';
 
 
 class Home extends StatefulWidget {
@@ -21,16 +22,13 @@ class _HomeState extends State<Home> {
     _fetchPosts();
   }
   
-  Post _mapToPost(dynamic json) {
-    return mapToPost(json);
-  }
 
 
   Future<void> _fetchPosts() async {
     try {
       final data = await _homeService.getPosts();
       setState(() {
-        _posts = data.map((post) => _mapToPost(post)).toList();
+        _posts = data.map((post) => Post.fromJson(post)).toList();
         _likedStatus = List<bool>.filled(_posts.length, false);
       });
     } catch (e) {
@@ -44,11 +42,13 @@ class _HomeState extends State<Home> {
 void _toggleLike(int index) {
   setState(() {
     _likedStatus[index] = !_likedStatus[index];
-    if (_likedStatus[index]) {
+    /*
+    * if (_likedStatus[index]) {
       _posts[index].like++;
     } else {
       _posts[index].like--;
     }
+    * */
   });
 }
 
@@ -71,21 +71,18 @@ void _toggleLike(int index) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(post.user.imageUrl),
-                      radius: 20,
-                    ),
+                    leading: const Icon(Icons.person),
                     title: Text(
-                      '${post.user.firstName} ${post.user.lastName}',
+                      '${post.recruiter?.account?.firstname} ${post.recruiter?.account?.lastname}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Image.network(post.urlImageSocialNetwork),
+                  Image.network(post.image!),
                   const SizedBox(height: 8),
-                  Text(post.descriptionSocialNetwork),
+                  Text(post.description!),
                   const Divider(), // Línea horizontal
                   ListTile(
                     leading: IconButton(
@@ -97,7 +94,7 @@ void _toggleLike(int index) {
                       ),
                       onPressed: () => _toggleLike(index),
                     ),
-                    title: Text('${post.like} Likes'),
+                    //title: Text('${post.like} Likes'),
                   ),
                 ],
               ),
