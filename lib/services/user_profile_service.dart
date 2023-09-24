@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zendriver/ui/shared/services/base_service.dart';
 import '../models/profiles.dart';
 import '../models/user_profile.dart';
+import '../models/user_update.dart';
 
 class UserProfileService extends BaseService {
   late final String baseUrl;
@@ -25,10 +26,10 @@ class UserProfileService extends BaseService {
     }
   }
   
-  Future<void> updateData(UserProfile updatedProfile) async {
+  Future<void> updateData(int ? id, UserUpdate updatedProfile) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final response = await http.put(
-    Uri.parse('$baseUrl/${updatedProfile.id}'),
+    Uri.parse('$baseUrl/${id}'),
     headers: {
       HttpHeaders.authorizationHeader: prefs.getString('token') ?? '',
       HttpHeaders.contentTypeHeader: 'application/json',

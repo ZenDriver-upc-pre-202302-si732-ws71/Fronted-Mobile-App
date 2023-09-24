@@ -4,6 +4,7 @@ import 'package:zendriver/models/profiles.dart';
 import 'package:zendriver/models/user_sign_up.dart';
 import 'package:zendriver/services/profile_service.dart';
 import '../../models/user_profile.dart';
+import '../../models/user_update.dart';
 import '../../services/user_profile_service.dart';
 import 'login.dart';
 
@@ -39,14 +40,11 @@ class _ProfileState extends State<Profile> {
       firstNameController.text = user?.firstname ?? '';
       lastNameController.text = user?.lastname ?? '';
       usernameController.text = user?.username ?? '';
-      //passwordController.text = user?.password ?? '';
       passwordController.text = 'Contact Admin to change';
       phoneController.text = user?.phone ?? '';
       roleController.text = user?.role ?? '';
       descriptionController.text = 'You are a user of ZenDriver';
-      //imageUrlController.text = user?.imageUrl ?? '';
       imageUrlController.text = 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg';
-      //birthdayDateController.text = user?.birthdayDate ?? '';
       birthdayDateController.text = '12-9-1995';
     });
   }
@@ -86,22 +84,21 @@ class _ProfileState extends State<Profile> {
 
   void updateUserProfile() async {
 
-    final updatedUser = UserProfile(
-      firstname: user!.firstname,
-      lastname: user!.lastname,
+    final updatedUser = UserUpdate(
+      firstName: user!.firstname,
+      lastName: user!.lastname,
       username: usernameController.text,
-      //password: passwordController.text,
       phone: phoneController.text,
-      //role: roleController.text,
-      //description: descriptionController.text,
-      //imageUrl: imageUrlController.text,
-      //birthdayDate: birthdayDateController.text,
+      recruiter: null,
+      driver: null,
     );
 
     try {
-      await profileService?.updateData(updatedUser);
+      await profileService?.updateData(user!.id, updatedUser);
+      final response = await profileService?.getData(userId!);
+      print(response);
       setState(() {
-      user = updatedUser;
+        user = response;
       });
     } catch (e) {
       print(e);
