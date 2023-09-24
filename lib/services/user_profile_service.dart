@@ -26,7 +26,8 @@ class UserProfileService extends BaseService {
     }
   }
   
-  Future<void> updateData(int ? id, UserUpdate updatedProfile) async {
+  Future<UserUpdate> updateData(int ? id, UserUpdate updatedProfile) async {
+  print(id);
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final response = await http.put(
     Uri.parse('$baseUrl/${id}'),
@@ -35,9 +36,11 @@ class UserProfileService extends BaseService {
       HttpHeaders.contentTypeHeader: 'application/json',
     },
     body: jsonEncode(updatedProfile.toJson()),
+    
   );
 
   if (response.statusCode == HttpStatus.ok) {
+    return UserUpdate.fromJson(json.decode(response.body));
     // Actualización exitosa
     // Puedes mostrar una notificación o realizar cualquier otra acción deseada
   } else {

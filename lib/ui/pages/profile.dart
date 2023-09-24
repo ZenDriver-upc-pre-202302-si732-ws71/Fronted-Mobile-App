@@ -20,6 +20,7 @@ class _ProfileState extends State<Profile> {
   Future<SharedPreferences>? _prefs;
   String? tuken;
   String? id;
+  String? userRole = '';
   int? userId;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -37,6 +38,7 @@ class _ProfileState extends State<Profile> {
     user = await profileService?.getData(userId!);
     setState(() {
       user = user;
+      userRole = user?.role ?? '';
       firstNameController.text = user?.firstname ?? '';
       lastNameController.text = user?.lastname ?? '';
       usernameController.text = user?.username ?? '';
@@ -85,20 +87,23 @@ class _ProfileState extends State<Profile> {
   void updateUserProfile() async {
 
     final updatedUser = UserUpdate(
-      firstName: user!.firstname,
-      lastName: user!.lastname,
+      firstname: user!.firstname,
+      lastname: user!.lastname,
       username: usernameController.text,
       phone: phoneController.text,
-      recruiter: null,
-      driver: null,
     );
 
     try {
-      await profileService?.updateData(user!.id, updatedUser);
+      final responseUpdate = await profileService?.updateData(userId!, updatedUser);
+      print(userId!);
+      print('----------------User response update----------------');
+      print(responseUpdate);
       final response = await profileService?.getData(userId!);
+      print('----------------User actual----------------');
       print(response);
       setState(() {
         user = response;
+        print(user);
       });
     } catch (e) {
       print(e);
@@ -141,11 +146,13 @@ class _ProfileState extends State<Profile> {
                 ),
               ), */
               const SizedBox(height: 16.0),
+              buildTextField('Firstname', firstNameController),
+              buildTextField('Lastname', lastNameController),
               buildTextField('Username', usernameController),
-              buildTextField('Password', passwordController),
-              buildTextField('Description', descriptionController),
+              buildTextLabelField('Password', 'Contact Admin to change'),
+              //buildTextField('Description', descriptionController),
               buildTextField('Phone', phoneController),
-              buildTextField('Role', roleController),
+              buildTextLabelField('Role', userRole!),
               //buildTextField('BrithdayDate', birthdayDateController),
               const SizedBox(height: 16.0),
               Row(
@@ -189,6 +196,35 @@ Widget buildTextField(String labelText, TextEditingController controller) {
                 width: 200,
                 child: TextField(
                   controller: controller,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ));
+}
+
+
+@override
+Widget buildTextLabelField(String labelText, String labelText2) {
+  return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: Row(
+        children: [
+          Text(
+            labelText,
+            style: const TextStyle(fontSize: 16.0),
+          ),
+          const SizedBox(
+            height: 5.0,
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 200,
+                child: Text(
+                  labelText2,
                 ),
               ),
             ),

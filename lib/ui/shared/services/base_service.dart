@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseService {
-  final String baseUri = "https://zendrivers.azurewebsites.net";
-  //final String baseUri = "https://localhost:7078";
+  //final String baseUri = "https://zendrivers.azurewebsites.net";
+  final String baseUri = "https://localhost:7078";
   final String apiVersion = "api/v1";
 
   Future<http.Response> get(String url) async {
